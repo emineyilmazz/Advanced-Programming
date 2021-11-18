@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+    
+
+
+  <style> 
+    body { max-width: 400px; }
+    
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked xxx -->
+
+<h2 id=title title="Put your name here"></h2>
+
+<p title="Battery level (integer)">
+  Battery Status <span id=lev></span>
+</p>
+<pre>
+   
+</pre>
+<p title="Online Status ">
+  Online Status <span id=on></span>
+</p>
+ <pre>
+
+ </pre>
+
+ <p title="Keyboard ">
+  Keyboard <span id=k></span>
+</p>
+
+<script>
+"use strict";
+window.onkeyup=e => console.log(e.key)
+function init () {
+navigator.getBattery().then( b=> b.charging = display)
+navigator.getBattery().then( b=> b.onchargingchange = (b.level*100).toFixed(0)+"%" ) 
+
+
+check()
+}
+ function check() {
+  fetch(url.value).then(r=> resp.innerText ="OK").catch( e=> resp.innerText=e) }
+
+    title.innerText = document.title;
+  
+    init();
+</script>
+
+</body>
+</html>
+
