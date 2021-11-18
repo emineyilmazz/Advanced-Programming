@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+  <meta charset="UTF-8">
+  <title>power</title>
+
+<style>
+  body { max-width: 400x; }
+  pre  { overflow-x: auto; }
+  input { width: 50px }
+</style>
+</head>
+
+<body>
+
+<h2 id="title">power</h2>
+x = <input type="number" id="ex" value="1" onchange="calculate()">
+&emsp;
+y = <input type="number" id="yu" value="1" onchange="calculate()">
+&emsp;
+<span id="res">(x^y) = 1</span>
+<pre id="out"> </pre>
+<hr>
+<b>Sample code</b>
+<pre id="sample"> </pre>
+
+<hr>
+<b>Original table</b>
+<p>
+ <img src="i.jpg">
+ <div>
+  Ref: <a href="https://onlinemschool.com/math/formula/order_table/" target="NewTab">Power Table</a>
+</div> 
+</p>
+<script>
+"use strict";
+function pow(x, y) {
+  let g = Math.pow(x,y)
+  return g
+}
+  
+function calculate() {
+      
+  let x= Number(ex.value)
+  if (!Number.isInteger(x)) {
+     x = Math.round(x); ex.value = x
+  }
+  let y = Number(yu.value)
+  res.innerText = "P(x^y) = "+pow(x, y)
+}
+
+function doTable() {
+  const L = [1, 2, 3, 4, 5]
+  let a = L.map((y) => 'y='+y)
+  let str = header(a)
+  for (let x=1; x<=5; x++) { 
+     let a = L.map((y) => pow(x, y))
+     str += oneLine(a, x)
+  }
+  return str
+}
+let header  = (a) => '        '+ a.join('          ') 
+let oneLine = (a, x) => '\nx='+x+ '     '+ a.join('            ')
+  
+  title.innerText = document.title
+  sample.innerText = pow+'\n'+doTable
+  calculate()
+  out.innerText = doTable()
+</script>
+
+
+
+</body></html>
