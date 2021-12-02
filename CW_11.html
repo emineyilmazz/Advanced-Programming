@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="../images/icon192.png">
+  <title>GitHub Users</title>
+  <style>
+    body {
+        max-width: 300px;
+        font: size 100px;
+        font-style: bold;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        
+
+    }
+    img {
+
+        padding-right: 13px; 
+        width: 300px;
+        float: left;
+    }
+    pre { overflow-x: auto; }
+    #out { color: rgb(106, 106, 231); }
+  </style>
+</head>
+
+<body>
+
+<h2 id=title></h2>
+<input type=text id=usr value=blm-fsmvu onChange="readUser()">
+<p id=out></p>
+
+
+
+
+<script>
+"use strict";
+function error(e) {
+    out.innerText= e
+    out.style.color = 'red'
+    console.error(e)
+}
+function cause(s) {
+  switch (s) {
+    case 403:
+      return 'Rate limit exceeded'
+    case 404:
+      return usr.value+' not found'
+    default:
+      return 'Status '+s
+  }
+}
+async function toJSON(url) {
+  try {
+    let r = await fetch(url)
+    if (!r.ok) throw cause(r.status)
+    return r.json()
+  } catch (e) {
+    error(e)
+  }
+}
+async function readUser() {
+    const URL = "https://api.github.com/users/"
+    const BR = '<BR>'
+    let u = await toJSON(URL+usr.value)
+    if (!u || !u.login) return
+    out.style.color = ''
+    
+    
+    out.innerHTML = `<img src="${u.avatar_url}">`
+    
+    
+    let s = (u.name || u.login)
+    if (u.location) s += ', '+u.location
+    out.innerHTML += s+BR; console.log(s)
+    
+     
+    let h = "github.com/"+u.login
+    out.innerHTML += 
+    `<a href="https://${h}" target=NewTab>${h}</a>`
+    
+    let n = u.public_repos
+    out.innerHTML += BR+`${n} public repos`+BR+BR
+    if (!n) return
+    let b = await toJSON(URL+u.login+"/repos")
+    out.innerHTML += "Name:" +s+BR+b.map(x => x.name).join(", ")
+}
+    title.innerText = document.title
+    sample.innerText = toJSON +'\n'+ readUser
+    out.innerText = "Reading data"
+</script>
+<script src="../navbar.js"></script>
+
+</body>
+</html>
