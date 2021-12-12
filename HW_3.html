@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<style>
+    p {
+  text-shadow: 0 0 3px #FF0000;
+}
+body {
+  background-color: lightblue;
+}
+.saga-kaydir{
+float:right;
+padding:0 0 10px 10px;
+}
+   .ucak {
+        position: relative;
+        cursor: pointer;
+        width: 255px;
+        height: 160px;
+        left: 0px;
+        right:0px;
+        
+        transition: 5s cubic-bezier(0, 0, 0, 10);
+        
+        background-color: pink;
+      }
+
+</style>
+  
+ <body>
+
+<p style="color:rgb(65, 15, 122) ; font-size: 43px; font-family:courier; "> Uçağın inişe geçmesi için resme tıklayınız </p>
+
+<img class="ucak" src="ucak.jpg" onclick="myMove()" id ="ucak">
+<b><p>Sample code </p>
+  <p> function myMove() {</p>
+  <p> let id = null;</p>
+ <p> const elem = document.getElementById("ucak");   </p>
+   <p> let pos = 0;</p>
+   <p> clearInterval(id);</p>
+   <p> id = setInterval(frame, 5);</p>
+  <p>function frame() {</p>
+  <p> if (pos == 400) {</p>
+   <p>  clearInterval(id);</p>
+ <p> } else { </p>
+  <p>  pos++; </p>
+   <p>  elem.style.top = pos + "px"; </p>
+   <p>  elem.style.left = pos + "px"; }}}</p>
+
+  </p> </b>
+
+<script>
+  function myMove() {
+  let id = null;
+  const elem = document.getElementById("ucak");   
+  let pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 5);
+  function frame() {
+    if (pos == 500) {
+    clearInterval(id);
+    } else {
+      pos++; 
+      elem.style.top = pos + "px"; 
+      elem.style.left = pos + "px"; 
+    }
+  }
+} 
+
+  sample.innerText = myMove + '\n'
+  out.innerText = myMove()
+  myMove();
+
+</script> 
+</body>
+</html>
