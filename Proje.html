@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        background-color: black;
+    }
+  
+    td{
+        color: white;
+    }
+    .foto {
+    background:transparent;
+    padding:10px;
+    border:13px  rgb(216, 216, 164) ;
+    box-shadow:15px 15px 15px rgb(192, 175, 24); 
+}
+.b {
+  background-color: white;
+}
+
+  
+
+</style>
+<img src="kıble.jpg" alt="Kabe"  width="400" class="foto">
+
+
+<hr>
+<br>
+<body>
+
+  
+  <p style="font-size: 1000; color: rgba(192, 175 ,24);">
+    وَٱسْتَعِينُوا۟ بِٱلصَّبْرِ وَٱلصَّلَوٰةِ ۚ وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى ٱلْخَٰشِعِينَ  </p>
+   <p style="font-size: 1000; color: rgba(192, 175 ,24);">And seek help through patience and prayer. Indeed, it is a burden except for the humble</p>
+  <p style="font-size: 700; color: rgba(192, 175, 24);">
+   Sabır ve namazla Allah’tan yardım isteyin. Şüphesiz namaz, Allah’a derinden saygı duyanlardan 
+     başkasına ağır gelir.</p>
+
+    <form>
+        <table class="hel12" width="610">
+          <tbody>
+            <tr>
+              <td>Latitude </td>
+              <td><input type="text"  name="Latitude">e.g., 36 [ North, South)</td>
+            </tr>
+            <tr>
+              <td>Longitude</td>
+              <td><input type="text" name="Longitude">e.g., -45 [ East,  West)</td>
+            </tr>
+            <tr>
+              <td>Qibla from True North =</td>
+              <td><span id="Qibla"></span></td>
+            </tr>
+      
+            <tr>
+     <td colspan="2" align="center">
+         <input clas="b" type="button" value="Calculate" onclick="a=calculate(this.form.Latitude.value,this.form.Longitude.value);displayDirection(a);return false;"> &nbsp;
+         <input clas="b" type="button" value="Clear" onclick="this.form.reset();clearResult();return false">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <script>
+          var PI = Math.PI;
+var win = null;
+function calculate(lat, lon) {
+	if (isNaN(lat+0.0) || isNaN(lon+0.0)) {
+		alert("Non-numeric entry/entries");
+		return "???";
+	}
+	if ((lat-0.0)>(90.0-0.0) || (lat-0.0)<(-90.0-0.0)) {
+		alert("Latitude must be between -90 and 90 degrees");
+		return "???";
+	}
+	if ((lon-0.0)>(180.0-0.0) || (lon-0.0)<(-180.0-0.0)) {
+		alert("Longitude must be between -180 and 180 degrees");
+		return "???";
+	}
+
+	if ((lat+0.0==21.4) && (lon+0.0==39.8)) return "Any Direction";
+	latk = 21.4225*PI/180.0;
+	longk = 39.8264*PI/180.0;
+	phi = lat*PI/180.0;
+	lambda = lon*PI/180.0;
+	qiblad = 180.0/PI*Math.atan2(Math.sin(longk-lambda),                Math.cos(phi)*Math.tan(latk)-Math.sin(phi)*Math.cos(longk-lambda));
+  console.log(qiblad);
+	return (qiblad);
+}
+
+
+function clearResult()
+{
+	if (document.getElementById) document.getElementById('Qibla').innerHTML=''; 
+	else if(document.all) document.all['Qibla'].innerText=''; 
+	else if (win) {
+		win.close();
+		win = null;
+	}
+}
+function displayDirection(a)
+{
+	d = (a>=0? a+" degrees East of North" : -a+" degrees West of North");
+	if (document.getElementById) document.getElementById('Qibla').innerHTML = d; 
+	else if (document.all) document.all['Qibla'].innerText = d; 
+	else {
+		win = open('','Result','width=200,height=75'); win.document.close(); win.document.write('Qibla direction is <br>'+d);
+	}
+}
+      </script>
+</body>
+</html>
