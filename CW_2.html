@@ -1,14 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=b.jpg, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="../images/icon192.png">
+    <script src="chap4.js"></script>
+    <title>Data Analysis</title>
 </head>
+
 <body>
-    <center> <a
-href="https://emineyilmazz.github.io/Advanced-Programming/CW-2/CW_2.pdf">CW_2 İÇİN TIKLAYINIZ
-</a></center> 
+
+<h2 id=title></h2>
+
+<p>Minimum correlation =
+<input type=number id=inp value="0.0"
+  style="width:50px" onChange="report(analyze(value))">
+</p>
+<p id=out></p>
+
+<hr />
+<b>Sample code</b>
+<pre id=sample></pre>
+
+<hr />
+<p>Ref: <a href="http://eloquentjavascript.net/04_data.html#p_LI+01yIQON" 
+   target="ExternalDocument">Chap 4, Final analysis</a>
+</p>
+    <p>IMG: <a href="CW02.jpg" target="NewTab">image</a>
+</p>
+
+<script>
+function report(a) {
+  out.innerText = JOURNAL.length+" journal entries and "
+                + a.length+" events\n" + a.join("\n")
+}
+    title.innerText = document.title; 
+    report([...EVENTS])  //Set to Array
+    sample.innerText = analyze+"\n"+journalEvents;
+
+    function phi([n00, n01, n10, n11]) {
+  return (n11 * n00 - n10 * n01) /
+    Math.sqrt((n10 + n11) * (n00 + n01) *
+              (n01 + n11) * (n00 + n10));
+}
+
+function tableFor(evt) {
+  let table = [0, 0, 0, 0];
+  for (let entry of JOURNAL) {
+    let index = 0;
+    if (entry.events.includes(evt)) index += 1;
+    if (entry.squirrel) index += 2;
+    table[index] += 1;
+  }
+  return table;
+}
+
+function analyze(min=0) {
+  let a = [];
+  for (let evt of EVENTS) {
+    let cor = phi(tableFor(evt));
+    let dizi=tableFor(evt);
+    let count = Number(dizi[1])+Number(dizi[3]);
+    if (Math.abs(cor) > min)
+      a.push(evt +": "+cor.toFixed(4)+"---"+count);
+  }
+  return a
+}
+
+function journalEvents() {
+  EVENTS.clear();
+  for (let entry of JOURNAL)
+    for (let e of entry.events)
+      EVENTS.add(e);
+}
+
+
+
+class Entry {
+  constructor(evt, sq) {
+    this.events = evt; this.squirrel = sq
+  }
+  valueOf() { return this.events.length }
+  toString() {
+    let s = this.valueOf()+" events"
+    if (this.squirrel) s += " ✘";
+    return "Entry: "+s
+  }
+}
+
+const EVENTS = new Set();  //use Set -- not Array
+
+
+journalEvents()  //determine the set of events
+</script>
+
 </body>
 </html>
